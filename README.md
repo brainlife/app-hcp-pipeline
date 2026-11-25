@@ -3,6 +3,39 @@
 
 # app-hcp-pipeline
 
+<!-- brainlife-app:begin (generated from the App manifest; edit the manifest, not this block) -->
+
+**Runs the HCP Pipelines 4.1.3 structural preprocessing (PreFreeSurfer, FreeSurfer, PostFreeSurfer) on T1- and T2-weighted images with the HCP BIDS-App.**
+
+Converts the inputs to BIDS and runs the HCP Pipelines BIDS-App (bids/hcppipelines:v4.1.3-1) for the chosen stages. Needs at least one T1w and one T2w image. If a FreeSurfer 6 output is given, the FreeSurfer stage is skipped; FreeSurfer 7 output is not supported.
+
+Run it on brainlife.io: [https://doi.org/10.25663/brainlife.app.465](https://doi.org/10.25663/brainlife.app.465)
+
+| Input | Datatype | Required | Description |
+|---|---|---|---|
+| `0` | `neuro/anat/t1w` | yes | T1 image |
+| `1` | `neuro/anat/t2w` | yes | T2 image |
+| `2` | `neuro/freesurfer` (!v7) | no | Freesurfer output. With this input, the FreeSurfer step will be skipped. WARNING: FreeSurfer 7.X is not currently supported due to poor quality surface reconstructions. Please provide a FreeSurfer 6.0 output. (NOTE: do not provide this input when using ABCD data) |
+
+| Output | Datatype | Description |
+|---|---|---|
+| `output` | `neuro/hcp/freesurferpost` | HCP structural preprocessing output folder (T1w, MNINonLinear and the FreeSurfer subject directory). |
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `stage` | string | `PreFreeSurfer FreeSurfer PostFreeSurfer` | Which stages to run. Space separated list. (at the moment only the default [PreFreeSurfer FreeSurfer PostFreeSurfer] can be run). If you input a freesurfer folder, the FreeSurfer step will be skipped. |
+| `processing_mode` | enum | `legacy` | Control HCP-Pipeline mode. 'hcp' (HCPStyleData): require T2w and fieldmap modalities. 'legacy' (LegacyStyleData): always ignore T2w and fieldmaps. 'auto': use T2w and/or fieldmaps if available. (at the moment only 'legacy' can be run). Options: `hcp`, `legacy`, `auto`. |
+| `notalcheck` | boolean | `false` | If you are seeing "ERROR: Talairach failed", you might be able to work around this by setting this option so that freesurfer will skip this process. If you set this option, you will need to make sure that your image is well aligned to the 3 primary axis. |
+| `skipbidsvalidation` | boolean | `false` | Skip the BIDS validation of input data. Try this option if your data is not BIDS compatible but you'd like to go ahead and process it through this App anyway. |
+
+Runtime: container `bids/hcppipelines:v4.1.3-1`; 8 CPUs; 16 GB memory; 15 h walltime; needs `FREESURFER_LICENSE`.
+
+Please cite:
+- Glasser MF, Sotiropoulos SN, Wilson JA, et al. The minimal preprocessing pipelines for the Human Connectome Project. NeuroImage 80:105-124 (2013). [doi:10.1016/j.neuroimage.2013.04.127](https://doi.org/10.1016/j.neuroimage.2013.04.127)
+- Avesani P, McPherson B, Hayashi S, et al. The open diffusion data derivatives, brain data upcycling via integrated publishing of derivatives and reproducible open cloud services. Sci Data 6, 69 (2019). [doi:10.1038/s41597-019-0073-y](https://doi.org/10.1038/s41597-019-0073-y)
+
+<!-- brainlife-app:end -->
+
 This App is a Brainlife wrapper for [HCP Pipelines](https://github.com/Washington-University/HCPpipelines). The HCP Pipelines product is a set of tools for processing Magnetic Resonance Imaging (MRI) images for the [Human Connectome Project](https://www.humanconnectome.org/). In particular, this App implements the structural preprocessing, and uses the [BIDS-app wrapper](https://github.com/BIDS-Apps/HCPPipelines), which consists of a container that includes all of the dependencies and a run script that parses a BIDS dataset (this is the reason why the latest version of this App may not correspond to the latest released version of the HCP Pipelines).
 
 #### References and resources to consider
