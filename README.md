@@ -10,7 +10,7 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-lightgrey.svg" alt="MIT license"></a>
 </p>
 
-## 🧠 At a glance
+## At a glance
 
 <!-- brainlife-app:begin (generated from the App manifest; edit the manifest, not this block) -->
 
@@ -20,14 +20,14 @@ Converts the inputs to BIDS and runs the HCP Pipelines BIDS-App (bids/hcppipelin
 
 | | |
 |---|---|
-| 📥 **Inputs** | `neuro/anat/t1w` · `neuro/anat/t2w` · `neuro/freesurfer` (optional) |
-| 📤 **Outputs** | `neuro/hcp/freesurferpost` |
-| 🐳 **Container** | `bids/hcppipelines:v4.1.3-1` |
-| ⚙️ **Resources** | 8 CPUs · 16 GB memory · 15 h walltime |
-| 🔑 **Requires** | `FREESURFER_LICENSE` |
-| 🔗 **Run it** | [doi.org/10.25663/brainlife.app.465](https://doi.org/10.25663/brainlife.app.465) |
+| **Inputs** | `neuro/anat/t1w` · `neuro/anat/t2w` · `neuro/freesurfer` (optional) |
+| **Outputs** | `neuro/hcp/freesurferpost` |
+| **Container** | `bids/hcppipelines:v4.1.3-1` |
+| **Resources** | 8 CPUs · 16 GB memory · 15 h walltime |
+| **Requires** | `FREESURFER_LICENSE` |
+| **Run it** | [doi.org/10.25663/brainlife.app.465](https://doi.org/10.25663/brainlife.app.465) |
 
-#### 📥 Inputs
+#### Inputs
 
 | Input | Datatype | Required | Description |
 |---|---|---|---|
@@ -35,14 +35,14 @@ Converts the inputs to BIDS and runs the HCP Pipelines BIDS-App (bids/hcppipelin
 | `1` | `neuro/anat/t2w` | yes | T2 image |
 | `2` | `neuro/freesurfer` (!v7) | no | Freesurfer output. With this input, the FreeSurfer step will be skipped. WARNING: FreeSurfer 7.X is not currently supported due to poor quality surface reconstructions. Please provide a FreeSurfer 6.0 output. (NOTE: do not provide this input when using ABCD data) |
 
-#### 📤 Outputs
+#### Outputs
 
 | Output | Datatype | Description |
 |---|---|---|
 | `output` | `neuro/hcp/freesurferpost` | HCP structural preprocessing output folder (T1w, MNINonLinear and the FreeSurfer subject directory). |
 
 <details>
-<summary><b>⚙️ Parameters</b> (4)</summary>
+<summary><b>Parameters</b> (4)</summary>
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
@@ -55,13 +55,13 @@ Converts the inputs to BIDS and runs the HCP Pipelines BIDS-App (bids/hcppipelin
 
 <!-- brainlife-app:end -->
 
-## 🚀 Running the App
+## Running the App
 
 This App is a brainlife.io wrapper for the [HCP Pipelines](https://github.com/Washington-University/HCPpipelines), the tools used to process MRI images for the [Human Connectome Project](https://www.humanconnectome.org/). It implements the structural preprocessing and uses the [HCP Pipelines BIDS-App](https://github.com/BIDS-Apps/HCPPipelines), a container with all dependencies and a run script that parses a BIDS dataset. For this reason the App's version may lag behind the latest HCP Pipelines release.
 
 The registered App runs the `bids/hcppipelines:v4.1.3-1` container from branch [`v4.1.3`](https://github.com/brainlife/app-hcp-pipeline/tree/v4.1.3). The default branch (`master`) and branch `v4.3.0-3` try the `v4.3.0-3` container and are not registered on brainlife.io.
 
-### ☁️ On brainlife.io
+### On brainlife.io
 
 Open the App at [doi.org/10.25663/brainlife.app.465](https://doi.org/10.25663/brainlife.app.465), choose a T1-weighted and a T2-weighted image (and optionally a FreeSurfer output) from your project, set the options and press **Execute**. The output is a `neuro/hcp/freesurferpost` dataset archived to your project.
 
@@ -76,13 +76,13 @@ Options:
 - `notalcheck`: skip FreeSurfer's Talairach check.
 - `skipbidsvalidation`: skip BIDS validation of the input data.
 
-### 💻 Locally
+### Locally
 
 `main` expects the brainlife.io execution environment: it converts the inputs to BIDS with `bl2bids` and runs the BIDS-App container with [Singularity/Apptainer](https://apptainer.org/); it also needs [`jq`](https://jqlang.github.io/jq/) and a [FreeSurfer license](https://surfer.nmr.mgh.harvard.edu/registration.html). The config keys it reads are `t1`, `t2`, `fsin` (optional FreeSurfer directory), `stage`, `processing_mode`, `notalcheck` and `skipbidsvalidation`.
 
 To run the HCP Pipelines on your own machine, follow the [HCP Pipelines installation and usage instructions](https://github.com/Washington-University/HCPpipelines/wiki/Installation-and-Usage-Instructions) or the [BIDS-App](https://github.com/BIDS-Apps/HCPPipelines).
 
-## 📦 Outputs
+## Outputs
 
 `output/` holds the HCP subject directory written by the BIDS-App:
 
@@ -92,14 +92,14 @@ output/sub-<subject>/
 └── MNINonLinear/   images and surfaces in MNI space
 ```
 
-## 🩺 Troubleshooting
+## Troubleshooting
 
 - **`app needs minimally a T1w and a T2w. exiting`**: provide both a T1-weighted and a T2-weighted image.
 - **`ERROR: Talairach failed`**: set `notalcheck` to skip the Talairach check, and make sure the image is well aligned to the three primary axes.
 - **BIDS validation errors**: set `skipbidsvalidation` to process data that is not fully BIDS compatible.
 - **FreeSurfer input from FreeSurfer 7**: not supported; provide a FreeSurfer 6.0 output or let the App run FreeSurfer.
 
-## 📚 Citing
+## Citing
 
 > [!TIP]
 > If you use this App in your work, please cite the App, the software it builds on and brainlife.io (below). GitHub's **Cite this repository** button gives the App citation in APA and BibTeX.
@@ -112,13 +112,13 @@ output/sub-<subject>/
 - Marcus et al. Informatics and Data Mining Tools and Strategies for the Human Connectome Project. *Frontiers in Neuroinformatics* 5 (2011). [doi:10.3389/fninf.2011.00004](https://doi.org/10.3389/fninf.2011.00004)
 - Hayashi S, Caron BA, Heinsfeld AS, et al. brainlife.io: a decentralized and open-source cloud platform to support neuroscience research. *Nature Methods* 21:809–813 (2024). [doi:10.1038/s41592-024-02237-2](https://doi.org/10.1038/s41592-024-02237-2)
 
-## 👥 Authors
+## Authors
 
 - Giulia Bertò ([@giulia-berto](https://github.com/giulia-berto))
 - Soichi Hayashi ([@soichih](https://github.com/soichih))
 - Franco Pestilli ([@francopestilli](https://github.com/francopestilli), project director)
 
-## 💰 Funding
+## Funding
 
 [![Wellcome-226486/Z/22/Z](https://img.shields.io/badge/Wellcome-226486%2FZ%2F22%2FZ-purple.svg)](https://wellcome.org/)
 [![NIH-NINDS-U24NS140384](https://img.shields.io/badge/NIH_NINDS-U24NS140384-green.svg)](https://reporter.nih.gov/project-details/11261037)
@@ -137,6 +137,6 @@ output/sub-<subject>/
 
 <sub>brainlife.io is publicly funded, and acknowledging that support helps keep it running. This App was developed with support from Wellcome, the U.S. National Institutes of Health (including the BRAIN Initiative BRAIN CONNECTS program: The Axonal Projectome EXchange, U24NS140384, and the Center for Mesoscale Connectomics, UM1NS132207) and the U.S. National Science Foundation.</sub>
 
-## ⚖️ License
+## License
 
 [MIT](LICENSE). The HCP Pipelines, FreeSurfer and FSL are distributed under their own licenses.
